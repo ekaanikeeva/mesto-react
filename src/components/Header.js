@@ -1,8 +1,8 @@
-import React from 'react';
-import logo from '../images/logo.svg'
+import React from "react";
+import logo from "../images/logo.svg";
 
-function Header () {
-    return (
+function Header() {
+  return (
     <header className="header">
       <img
         className="header__logo"
@@ -10,7 +10,7 @@ function Header () {
         alt="Логотип с белым текстом Место Россия"
       />
     </header>
-    )
+  );
 }
 
 export default Header;
