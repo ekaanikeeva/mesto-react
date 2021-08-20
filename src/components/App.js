@@ -127,16 +127,14 @@ function App() {
         onCardClick={handleCardClick}
       />
       <Footer />
-      {selectedCard ? (
+      {selectedCard && (
         <ImagePopup
           isOpen={selectedCard}
           onClose={closeAllPopups}
           link={selectedCard.link}
           name={selectedCard.name}
         ></ImagePopup>
-      ) : (
-        ""
-      )}
+      ) }
     </div>
   );
 }

@@ -23,16 +23,12 @@ function Main(props) {
     api
       .getInitialCards()
       .then((res) => {
-        setCards(
-          res.map((item) => {
-            return item;
-          })
-        );
+        setCards(res);
       })
       .catch((err) => {
         console.log(`Не удалось загрузить карточки на страницу ${err}`);
       });
-  });
+  }, []);
 
   return (
     <main className="content">
