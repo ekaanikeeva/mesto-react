@@ -1,8 +1,29 @@
 import React from "react";
 
 function Card(props) {
+  const isOwn = props.cardData.owner._id === props.currentUser._id;
+  const isLiked = props.cardData.likes.some(
+    (i) => i._id === props.currentUser._id
+  );
+
+  const cardDeleteButtonClassName = `figure__basket ${
+    isOwn ? "figure__basket" : "figure__basket_hide"
+  }`;
+
+  const cardLikeButtonClassName = `figure__like ${
+    isLiked ? "figure__like_active" : "figure__like"
+  }`;
+
   function handleClick() {
     props.onCardClick(props.cardData);
+  }
+
+  function handleLikeClick() {
+    props.onCardLike(props.cardData);
+  }
+
+  function handleBasketClick() {
+    props.onCardDelete(props.cardData);
   }
 
   return (
@@ -13,9 +34,17 @@ function Card(props) {
         alt={props.cardData.name}
         onClick={handleClick}
       />
-      <button type="button" className="figure__basket"></button>
+      <button
+        type="button"
+        className={cardDeleteButtonClassName}
+        onClick={handleBasketClick}
+      ></button>
       <h2 className="figure__name">{props.cardData.name}</h2>
-      <button type="button" className="figure__like">
+      <button
+        type="button"
+        className={cardLikeButtonClassName}
+        onClick={handleLikeClick}
+      >
         <p className="figure__like-counter">{props.cardData.likes.length}</p>
       </button>
     </li>

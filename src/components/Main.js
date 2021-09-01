@@ -1,34 +1,11 @@
 import React from "react";
-import { api } from "../utils/Api";
+import { CardsContext } from "../context/CardsContext";
+import { CurrentUserContext } from "../context/CurrentUserContext";
 import Card from "./Card";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((res) => {
-        setUserName(res.name);
-        setUserAvatar(res.avatar);
-        setUserDescription(res.about);
-      })
-      .catch((err) => {
-        console.log(`Не удалось загрузить данные пользователя ${err}`);
-      });
-
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(`Не удалось загрузить карточки на страницу ${err}`);
-      });
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
+  const cards = React.useContext(CardsContext);
 
   return (
     <main className="content">
@@ -40,15 +17,15 @@ function Main(props) {
         />
         <img
           className="profile__avatar"
-          src={userAvatar}
+          src={currentUser.avatar}
           alt="Аватар профиля"
         />
         <div className="profile__info">
           <h1 id="profile-name" className="profile__name">
-            {userName}
+            {currentUser.name}
           </h1>
           <p id="profile-status" className="profile__status">
-            {userDescription}
+            {currentUser.about}
           </p>
         </div>
         <button
@@ -70,7 +47,10 @@ function Main(props) {
               <Card
                 key={item._id}
                 cardData={item}
+                currentUser={currentUser}
                 onCardClick={props.onCardClick}
+                onCardLike={props.handleCardLike}
+                onCardDelete={props.handleCardDelete}
               />
             );
           })}

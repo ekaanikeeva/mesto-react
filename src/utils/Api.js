@@ -2,8 +2,6 @@ class Api {
   constructor({ baseUrl, headers }) {
     this.baseUrl = baseUrl;
     this.headers = headers;
-
-    this.cardId = this.cardId;
   }
 
   _checkResponse(res) {
@@ -28,25 +26,25 @@ class Api {
   }
 
   //отправить новую информацию пользователя
-  setUserInform(item) {
+  setUserInform({ name, about }) {
     return fetch(`${this.baseUrl}/users/me `, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
-        name: item.name,
-        about: item.status,
+        name: name,
+        about: about,
       }),
     }).then(this._checkResponse);
   }
 
   // отправить добавленную карточку на сервер
-  addCard(item) {
+  addCard({ title, link }) {
     return fetch(`${this.baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
-        name: item.title,
-        link: item.link,
+        name: title,
+        link: link,
       }),
     }).then(this._checkResponse);
   }
@@ -80,7 +78,9 @@ class Api {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
-      body: JSON.stringify({ avatar: link }),
+      body: JSON.stringify({
+        avatar: link,
+      }),
     }).then(this._checkResponse);
   }
 }
